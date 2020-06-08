@@ -1,6 +1,8 @@
 venv/
 __pycache__/
 
+/app/static/index.js
+
 .DS_Store
 .merlin
 .bsb.lock
