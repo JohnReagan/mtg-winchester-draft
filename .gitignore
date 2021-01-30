@@ -1,7 +1,9 @@
 venv/
 __pycache__/
 
+# remove build files
 /app/static/index.js
+*.bs.js
 
 .DS_Store
 .merlin
