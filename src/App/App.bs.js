@@ -3,7 +3,7 @@
 var React = require("react");
 
 function App(Props) {
-  return React.createElement("div", undefined, "Hello Winchester Draft");
+  return React.createElement("div", undefined, "Hello Winchester Draft Test");
 }
 
 var make = App;
