@@ -3,14 +3,18 @@ import json
 from .cards import *
 
 from flask import Flask, request, jsonify, render_template
-app = Flask(__name__)
+from flask_cors import CORS
+
+app = Flask(__name__, static_folder='../build', static_url_path='/')
 app.debug = True
+# set up CORS to allow react dev server to request
+CORS(app)
 
 
 # A welcome message to test our server
 @app.route('/')
 def index():
-    return render_template('indexProduction.html')
+    return app.send_static_file('index.html')
 
 @app.route('/cards')
 def cards():
