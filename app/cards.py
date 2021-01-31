@@ -77,7 +77,7 @@ class BoosterOptions(object):
     is_custom_list = False
     rares_per_pack = 1
     uncommons_per_pack = 3
-    mythic_replace_rate = 0.2
+    mythic_replace_rate = 0.125
     contains_foil = True
 
     def __init__(self, **kwargs):
