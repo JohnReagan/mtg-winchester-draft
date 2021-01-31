@@ -94,10 +94,12 @@ class Booster(object):
     def pick_colors(self, card_list, amount):
         # Assume card list is a dictionary keyed off color
         picked_cards = []
-        while len(picked_cards) <= amount:
+        while len(picked_cards) < amount:
             color_list = ["W", "B", "U", "R", "G", "other"]
             random.shuffle(color_list)
             for color in color_list:
+                if len(picked_cards) >= amount:
+                    break
                 color_card_list = card_list.get(color)
                 if not color_card_list:
                     continue
@@ -105,7 +107,8 @@ class Booster(object):
                     card = random.choice(color_card_list)
                     color_card_list.remove(card)
                     picked_cards.append(card)
-                if len(picked_cards) >= amount:
+                if random.random() < 0.15:
+                    # 15% chance to break the color balance a little bit
                     break
         # print("picking {} cards".format(amount))
         return picked_cards
