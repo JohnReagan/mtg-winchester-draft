@@ -6,6 +6,7 @@ import { reducer as gameReducer } from './Game/slice'
 import { reducer as cardsReducer } from './Cards/slice';
 import { UserPile } from './UserPile';
 import { DraftPiles } from './DraftPiles';
+import './socket';
 
 const store = configureStore({
   reducer: combineReducers({game: gameReducer, cards: cardsReducer}),
