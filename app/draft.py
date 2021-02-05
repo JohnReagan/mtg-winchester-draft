@@ -78,6 +78,7 @@ class DraftController(object):
         # If ID is present, grab it from the database and populate the object.
         # Otherwise, just return empty object.
         if not id:
+            self.id = uuid.uuid1()
             return
         self.id = id
         self.load()
