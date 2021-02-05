@@ -44,7 +44,8 @@ ALLOWED_CARD_ARGS = [
     'rarity',
     'text',
     'setCode',
-    'types'
+    'types',
+    'supertypes'
 ]
 
 class Card(object):
@@ -64,7 +65,8 @@ class Card(object):
             rarity=card_json.get('rarity'),
             text=card_json.get('text', ''),
             setCode=card_json.get('setCode', ''),
-            types=card_json.get('types', '')
+            types=card_json.get('types', ''),
+            supertypes=card_json.get('supertypes', '')
         )
 
     def json(self):
@@ -105,12 +107,14 @@ class Booster(object):
                     continue
                 else:
                     card = random.choice(color_card_list)
+                    if 'Basic' in card.supertypes:
+                        # We never want to pick basic lands in Winchester draft.
+                        continue
                     color_card_list.remove(card)
                     picked_cards.append(card)
                 if random.random() < 0.15:
                     # 15% chance to break the color balance a little bit
                     break
-        # print("picking {} cards".format(amount))
         return picked_cards
 
 
@@ -144,6 +148,7 @@ class Booster(object):
             picked_cards.extend(
                 self.pick_colors(cards['common'],
                 self.booster_options.num_cards - len(picked_cards)))
+        self.cards = picked_cards
         return picked_cards
 
 
@@ -167,9 +172,10 @@ class CardDatabase(object):
 
 CARD_DB = CardDatabase.Instance()
 
-def get_booster(set):
+
+def get_booster(set, booster_options=None):
     card_list = [Card.from_json(c) for c in CARD_DB.get_card_data(set)]
-    booster = Booster(card_list)
+    booster = Booster(card_list, booster_options)
     return booster.generate()
 
 def card_internal(card_json):
